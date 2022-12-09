@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
-import { assertEquals } from "../../deps.ts";
-import { Result } from "../../src/index.ts";
+import { assertEquals } from "../deps.ts";
+import { Result, ResultOptions } from "../mod.ts";
 
 Deno.test("Test 'Result' class ", async (t) => {
   await t.step("Test default values", async () => {
@@ -12,13 +12,15 @@ Deno.test("Test 'Result' class ", async (t) => {
     assertEquals(resultDefault.data, null);
 
     // Create new instance with default values
-    const result = new Result({
+    const options: ResultOptions = {
       success: true,
       errors: ["TEST"],
       data: {
         test: true,
       },
-    });
+    };
+
+    const result = new Result(options);
 
     assertEquals(result.success, true);
     assertEquals(result.errors.length, 1);

@@ -1,7 +1,0 @@
-{
-  "scripts": {
-    "pretty": "deno fmt",
-    "test": "deno test tests/",
-    "test:dev": "deno test tests/ --watch"
-  }
-}
