@@ -1,0 +1,39 @@
+# Workflow name
+name: Delete workflow runs
+
+# Manual trigger
+on:
+  workflow_dispatch:
+    inputs:
+      workflow:
+        description: "Workflow file path"
+        type: string
+
+# Set run name
+run-name: Delete workflows [ ${{ inputs.workflow }} ] by @${{ github.actor }}
+
+# Default environment variables
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  delete-one-run:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.workflow != ''
+    steps:
+      - name: Delete workflow runs
+        uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
+        with:
+          repository: Merchandi/dmp # replace this with your own repository
+          older-than-seconds: 1 # 86400 remove all workflow runs older than 1 day
+          workflow: ${{ inputs.workflow }}
+
+  delete-all-runs:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.workflow == ''
+    steps:
+      - name: Delete workflow runs
+        uses: MajorScruffy/delete-old-workflow-runs@v0.3.0
+        with:
+          repository: Merchandi/dmp # replace this with your own repository
+          older-than-seconds: 1 # 86400 remove all workflow runs older than 1 day

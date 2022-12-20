@@ -1,0 +1,72 @@
+# Workflow name
+name: Publish custom npm library
+
+# Manual trigger
+on:
+  workflow_dispatch:
+    inputs:
+      folder:
+        description: "Library root folder"
+        required: true
+        default: ""
+        type: choice
+        options:
+          - classes
+      bump-type:
+        description: "Choose type of version bump"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+# Set run name
+run-name: Publish libraries/${{ inputs.folder }} by @${{ github.actor }}
+
+# Default environment variables
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+jobs:
+  publish:
+    # Set defaults for job
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: libraries/${{ inputs.folder }}
+
+    # Build -> Package -> Publish
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Add credentials
+        run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
+
+      - name: Install global dependencies 
+        run: npm i -g rimraf
+
+      - name: Install all dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build
+
+      - name: Delete node_modules
+        run: rimraf node_modules
+
+      - name: Install production dependencies
+        run: npm i --production
+
+      - name: Bump version
+        run: npm version ${{ inputs.bump-type }} 
+
+      - name: Publish
+        run: npm publish
+
+      - name: Update Package Version
+        uses: EndBug/add-and-commit@v9
+        with:
+         message: 'Bump version | ${{ inputs.folder }} | ${{ inputs.bump-type }}'
