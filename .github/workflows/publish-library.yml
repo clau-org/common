@@ -23,7 +23,7 @@ on:
           - major
 
 # Set run name
-run-name: Publish libraries/${{ inputs.folder }} by @${{ github.actor }}
+run-name: Publish ${{ inputs.folder }} by @${{ github.actor }}
 
 # Default environment variables
 env:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: libraries/${{ inputs.folder }}
+        working-directory: ${{ inputs.folder }}
 
     # Build -> Package -> Publish
     steps:
