@@ -1,12 +1,12 @@
 # Workflow name
-name: Publish custom npm library
+name: Publish npm package
 
 # Manual trigger
 on:
   workflow_dispatch:
     inputs:
       folder:
-        description: "Library root folder"
+        description: "Package root folder"
         required: true
         default: ""
         type: choice
