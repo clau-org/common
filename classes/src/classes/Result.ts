@@ -1,22 +1,16 @@
-/**
- * Simple result class
- * success: boolean -> if worked or not
- * data: object -> if worked object else null
- * errors: array -> if worked empty array else errors in order
- */
+/** Class representing a result. */
 export default class Result {
   success: boolean;
   data: any;
   errors: any[];
-
+  /**
+   * Create a result.
+   * @param {object} options - The options to initialize the result.
+   */
   constructor(options?: any) {
-    // Default to false
+    // Default values
     this.success = options?.success ?? false;
-
-    // Default to null
     this.data = options?.data ?? null;
-
-    // Default to empty
     this.errors = options?.errors ?? [];
   }
 }
