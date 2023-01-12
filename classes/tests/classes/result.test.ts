@@ -13,6 +13,9 @@ describe("Test 'Result' class ", () => {
 
     // null data
     expect(resultDefault.data).toEqual(null);
+    
+    // Empty message
+    expect(resultDefault.message).toEqual('');
 
     // Create new instance with default values
     const result: Result = new Result({
@@ -21,6 +24,7 @@ describe("Test 'Result' class ", () => {
       data: {
         test: true,
       },
+      message: "TEST",
     });
 
     // Success true
@@ -31,6 +35,9 @@ describe("Test 'Result' class ", () => {
 
     // data.test true
     expect(result.data.test).toEqual(true);
+    
+     // data.message "TEST"
+    expect(result.data.message).toEqual("TEST");
   });
 
   test("Test success 'false'", async () => {
@@ -49,6 +56,9 @@ describe("Test 'Result' class ", () => {
 
     // data null
     expect(result.data).toEqual(null);
+    
+    // Empty message
+    expect(result.message).toEqual('');
   });
 
   test("Test success 'true'", async () => {
@@ -71,5 +81,8 @@ describe("Test 'Result' class ", () => {
 
     // data null
     expect(result.data.test).toEqual(true);
+    
+    // Empty message
+    expect(result.message).toEqual('');
   });
 });
