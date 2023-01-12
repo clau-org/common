@@ -12,5 +12,6 @@ export default class Result {
     this.success = options?.success ?? false;
     this.data = options?.data ?? null;
     this.errors = options?.errors ?? [];
+    this.message = options?.message ?? "";
   }
 }
